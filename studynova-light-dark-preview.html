@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>StudyNova — Light/Dark Verification</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, 'Inter', system-ui, sans-serif; background:#F1F5F9; margin:0; padding:40px 24px; }
+  h1 { text-align:center; font-size:22px; color:#1E293B; margin-bottom:4px; }
+  p.note { text-align:center; color:#64748B; font-size:13px; margin-bottom:36px; }
+  .grid { display:flex; gap:28px; flex-wrap:wrap; justify-content:center; margin-bottom:44px; }
+  .label { text-align:center; font-weight:700; font-size:13px; margin-bottom:10px; color:#1E293B; }
+  .phone { width:270px; height:560px; border-radius:34px; border:8px solid #16161d; overflow:hidden; box-shadow:0 20px 40px rgba(0,0,0,.15); display:flex; flex-direction:column; }
+
+  /* ---- LIGHT tokens ---- */
+  .L { --primary:#7DD3FC; --secondary:#BFDBFE; --accent:#38BDF8; --success:#22C55E; --warning:#F59E0B; --danger:#EF4444;
+       --bg:#FFFDF7; --surface:#FFFFFF; --border:#E5E7EB; --ink:#1E293B; --ink-muted:#64748B; }
+  /* ---- DARK tokens ---- */
+  .D { --primary:#38BDF8; --secondary:#60A5FA; --accent:#7DD3FC; --success:#22C55E; --warning:#FBBF24; --danger:#F87171;
+       --bg:#0F172A; --surface:#1E293B; --border:#334155; --ink:#F8FAFC; --ink-muted:#CBD5E1; }
+
+  .screen { flex:1; background:var(--bg); padding:16px; }
+  .top { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .hi { color:var(--ink-muted); font-size:11px; }
+  .name { color:var(--ink); font-size:18px; font-weight:700; }
+  .streak { background:color-mix(in srgb, var(--warning) 15%, transparent); color:var(--warning); font-size:10px; font-weight:700; padding:5px 10px; border-radius:99px; }
+  .focus { background:var(--primary); border-radius:20px; padding:14px; margin-bottom:16px; }
+  .focus .t1 { color: color-mix(in srgb, var(--ink) 70%, transparent); font-size:10px; }
+  .focus .t2 { color:var(--ink); font-size:12px; font-weight:600; margin:4px 0 10px; }
+  .stitle { color:var(--ink); font-weight:700; font-size:13px; margin-bottom:10px; }
+  .qa-row { display:flex; gap:8px; margin-bottom:16px; }
+  .qa { flex:1; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:10px 6px; text-align:center; }
+  .qa .ic { width:32px;height:32px;border-radius:99px; margin:0 auto 6px; display:flex;align-items:center;justify-content:center; font-size:14px; }
+  .stat-row { display:flex; gap:8px; }
+  .stat { flex:1; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:12px 4px; text-align:center; }
+  .stat .val { font-size:16px; font-weight:700; color:var(--accent); }
+  .stat .lbl { font-size:9px; color:var(--ink-muted); margin-top:2px; }
+
+  .tutor-head { display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid var(--border); }
+  .tutor-head h4 { margin:0; font-size:15px; color:var(--ink); }
+  .cap { background: color-mix(in srgb, var(--secondary) 50%, transparent); color:var(--accent); font-size:9px; font-weight:700; padding:4px 8px; border-radius:99px; }
+  .chat { flex:1; padding:14px; display:flex; flex-direction:column; gap:10px; }
+  .bubble { max-width:78%; padding:9px 12px; border-radius:16px; font-size:11px; line-height:1.5; }
+  .bubble.ai { background:var(--surface); border:1px solid var(--border); color:var(--ink); align-self:flex-start; }
+  .bubble.me { background:var(--primary); color:var(--ink); align-self:flex-end; }
+  .input-row { display:flex; gap:8px; padding:12px; border-top:1px solid var(--border); align-items:center; }
+  .input-fake { flex:1; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:10px 12px; font-size:11px; color:var(--ink-muted); }
+  .send { width:32px;height:32px;border-radius:99px;background:var(--primary); color:var(--ink); display:flex;align-items:center;justify-content:center; font-size:14px; }
+
+  /* Splash always dark-navy regardless of app theme (brand decision) */
+  .splash { background:linear-gradient(160deg,#0F172A,#1E293B); flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .mark { width:80px;height:80px;border-radius:22px;background:#1E293B;border:1px solid rgba(56,189,248,.4); display:flex;align-items:center;justify-content:center; font-size:34px; position:relative; margin-bottom:18px; }
+  .mark .spark { position:absolute; top:-8px; right:-8px; font-size:20px; }
+  .splash h2 { color:#fff; font-size:26px; margin:0; letter-spacing:-0.3px; }
+  .splash p { color:#CBD5E1; font-size:13px; margin-top:6px; }
+</style>
+</head>
+<body>
+  <h1>StudyNova — Light / Dark Verification</h1>
+  <p class="note">Rendered from the exact CSS variable values in tailwind.config.js / tokens.ts, side by side.</p>
+
+  <div class="grid">
+    <div><div class="label">Splash (brand-locked dark)</div><div class="phone"><div class="splash">
+      <div class="mark">📖<span class="spark">✨</span></div>
+      <h2>StudyNova</h2><p>Study smarter. Achieve more.</p>
+    </div></div></div>
+
+    <div><div class="label">Dashboard — Light</div><div class="phone L"><div class="screen">
+      <div class="top"><div><div class="hi">Welcome back,</div><div class="name">Ada 👋</div></div><div class="streak">🔥 4 day streak</div></div>
+      <div class="focus"><div class="t1">Today's focus</div><div class="t2">No study plan yet — set one up.</div></div>
+      <div class="stitle">Quick actions</div>
+      <div class="qa-row">
+        <div class="qa"><div class="ic" style="background:var(--primary)">📤</div></div>
+        <div class="qa"><div class="ic" style="background:var(--accent)">🤖</div></div>
+        <div class="qa"><div class="ic" style="background:var(--warning)">🎯</div></div>
+      </div>
+      <div class="stitle">This week</div>
+      <div class="stat-row">
+        <div class="stat"><div class="val">0</div><div class="lbl">Quizzes done</div></div>
+        <div class="stat"><div class="val" style="color:var(--success)">0h</div><div class="lbl">Hours studied</div></div>
+        <div class="stat"><div class="val" style="color:var(--warning)">—</div><div class="lbl">Avg score</div></div>
+      </div>
+    </div></div></div>
+
+    <div><div class="label">Dashboard — Dark</div><div class="phone D"><div class="screen">
+      <div class="top"><div><div class="hi">Welcome back,</div><div class="name">Ada 👋</div></div><div class="streak">🔥 4 day streak</div></div>
+      <div class="focus"><div class="t1">Today's focus</div><div class="t2">No study plan yet — set one up.</div></div>
+      <div class="stitle">Quick actions</div>
+      <div class="qa-row">
+        <div class="qa"><div class="ic" style="background:var(--primary)">📤</div></div>
+        <div class="qa"><div class="ic" style="background:var(--accent)">🤖</div></div>
+        <div class="qa"><div class="ic" style="background:var(--warning)">🎯</div></div>
+      </div>
+      <div class="stitle">This week</div>
+      <div class="stat-row">
+        <div class="stat"><div class="val">0</div><div class="lbl">Quizzes done</div></div>
+        <div class="stat"><div class="val" style="color:var(--success)">0h</div><div class="lbl">Hours studied</div></div>
+        <div class="stat"><div class="val" style="color:var(--warning)">—</div><div class="lbl">Avg score</div></div>
+      </div>
+    </div></div></div>
+
+    <div><div class="label">AI Tutor — Light</div><div class="phone L"><div class="screen" style="padding:0;display:flex;flex-direction:column;height:100%">
+      <div class="tutor-head"><h4>AI Tutor</h4><div class="cap">7/10 today</div></div>
+      <div class="chat">
+        <div class="bubble ai">Hi! Ask me to explain a topic or quiz you.</div>
+        <div class="bubble me">Explain photosynthesis simply?</div>
+        <div class="bubble ai">Think of a leaf as a tiny solar kitchen...</div>
+      </div>
+      <div class="input-row"><div class="input-fake">Ask about anything...</div><div class="send">↑</div></div>
+    </div></div></div>
+
+    <div><div class="label">AI Tutor — Dark</div><div class="phone D"><div class="screen" style="padding:0;display:flex;flex-direction:column;height:100%">
+      <div class="tutor-head"><h4>AI Tutor</h4><div class="cap">7/10 today</div></div>
+      <div class="chat">
+        <div class="bubble ai">Hi! Ask me to explain a topic or quiz you.</div>
+        <div class="bubble me">Explain photosynthesis simply?</div>
+        <div class="bubble ai">Think of a leaf as a tiny solar kitchen...</div>
+      </div>
+      <div class="input-row"><div class="input-fake">Ask about anything...</div><div class="send">↑</div></div>
+    </div></div></div>
+  </div>
+</body>
+</html>

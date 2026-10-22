@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>LearnGenie — Screen Preview</title>
+<style>
+  :root {
+    --primary: #6C5CE7; --primary-light: #A29BFE; --primary-dark: #5546C8;
+    --secondary: #00D9A3; --warning: #FFB020; --danger: #FF5C5C;
+    --bg: #FAFAFC; --surface: #FFFFFF; --ink: #1A1A2E; --ink-muted: #6B7280;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, 'Inter', system-ui, sans-serif;
+    background: #EEF0F5; margin: 0; padding: 40px 24px;
+  }
+  h1 { text-align: center; color: var(--ink); font-size: 22px; margin-bottom: 4px; }
+  p.note { text-align: center; color: var(--ink-muted); font-size: 14px; margin-bottom: 40px; }
+  .row { display: flex; gap: 28px; flex-wrap: wrap; justify-content: center; }
+  .phone {
+    width: 280px; height: 580px; background: var(--surface); border-radius: 36px;
+    border: 8px solid #16161d; overflow: hidden; position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    display: flex; flex-direction: column;
+  }
+  .label { text-align: center; color: var(--ink); font-weight: 600; font-size: 13px; margin-bottom: 10px; }
+  .col { display: flex; flex-direction: column; align-items: center; }
+
+  /* Splash */
+  .splash { background: linear-gradient(160deg, var(--primary), var(--primary-dark)); flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .splash .logo { width:64px;height:64px;background:rgba(255,255,255,0.15); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px;}
+  .splash h2 { color:#fff; font-size:22px; margin:0; }
+  .splash p { color:rgba(255,255,255,0.7); font-size:12px; margin-top:4px; }
+
+  /* Onboarding */
+  .onboard { flex:1; display:flex; flex-direction:column; padding:16px; background:var(--bg); }
+  .onboard .skip { align-self:flex-end; color:var(--ink-muted); font-size:12px; }
+  .onboard .art { width:110px;height:110px;border-radius:999px;background:rgba(162,155,254,0.2); display:flex;align-items:center;justify-content:center;font-size:44px; margin:36px auto 24px; }
+  .onboard h3 { text-align:center; color:var(--ink); font-size:17px; margin:0 12px 8px; }
+  .onboard p { text-align:center; color:var(--ink-muted); font-size:12px; margin:0 20px; line-height:1.5; }
+  .dots { display:flex; gap:6px; justify-content:center; margin:24px 0 14px; }
+  .dot { width:8px;height:8px;border-radius:99px;background:rgba(108,92,231,0.2); }
+  .dot.active { width:22px; background:var(--primary); }
+  .btn { background:var(--primary); color:#fff; text-align:center; padding:13px; border-radius:16px; font-size:13px; font-weight:600; margin:0 12px; }
+
+  /* Dashboard */
+  .dash { flex:1; background:var(--bg); padding:16px; overflow:hidden; }
+  .dash .top { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .dash .hi { color:var(--ink-muted); font-size:11px; }
+  .dash .name { color:var(--ink); font-size:18px; font-weight:700; }
+  .streak { background:rgba(255,176,32,0.15); color:var(--warning); font-size:10px; font-weight:700; padding:5px 10px; border-radius:99px; }
+  .focus-card { background:var(--primary); border-radius:16px; padding:14px; margin-bottom:16px; }
+  .focus-card .t1 { color:rgba(255,255,255,0.8); font-size:10px; }
+  .focus-card .t2 { color:#fff; font-size:12px; font-weight:600; margin:4px 0 10px; line-height:1.4; }
+  .focus-card .cta { background:rgba(255,255,255,0.15); color:#fff; font-size:10px; font-weight:600; display:inline-block; padding:6px 12px; border-radius:99px; }
+  .section-title { color:var(--ink); font-weight:700; font-size:13px; margin-bottom:10px; }
+  .quick-actions { display:flex; gap:8px; margin-bottom:16px; }
+  .qa { flex:1; background:#fff; border-radius:14px; padding:10px 6px; text-align:center; border:1px solid rgba(26,26,46,0.05); }
+  .qa .icon { width:32px;height:32px;border-radius:99px;background:var(--primary); margin:0 auto 6px; display:flex;align-items:center;justify-content:center; font-size:14px; }
+  .qa .icon.sec { background: var(--secondary); }
+  .qa .icon.warn { background: var(--warning); }
+  .qa span { font-size:9px; color:var(--ink); font-weight:600; }
+  .stats { display:flex; gap:8px; }
+  .stat { flex:1; background:#fff; border-radius:14px; padding:12px 4px; text-align:center; border:1px solid rgba(26,26,46,0.05); }
+  .stat .val { font-size:16px; font-weight:700; }
+  .stat .lbl { font-size:9px; color:var(--ink-muted); margin-top:2px; }
+
+  /* Tutor */
+  .tutor { flex:1; display:flex; flex-direction:column; background:var(--bg); }
+  .tutor-head { display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid rgba(26,26,46,0.05); }
+  .tutor-head h4 { margin:0; font-size:15px; color:var(--ink); }
+  .cap { background:rgba(162,155,254,0.2); color:var(--primary); font-size:9px; font-weight:700; padding:4px 8px; border-radius:99px; }
+  .chat { flex:1; padding:14px; display:flex; flex-direction:column; gap:10px; }
+  .bubble { max-width:78%; padding:9px 12px; border-radius:14px; font-size:11px; line-height:1.5; }
+  .bubble.ai { background:#fff; border:1px solid rgba(26,26,46,0.05); color:var(--ink); align-self:flex-start; border-bottom-left-radius:4px; }
+  .bubble.me { background:var(--primary); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
+  .input-row { display:flex; gap:8px; padding:12px; border-top:1px solid rgba(26,26,46,0.05); align-items:center; }
+  .input-fake { flex:1; background:#fff; border:1px solid rgba(26,26,46,0.1); border-radius:14px; padding:10px 12px; font-size:11px; color:var(--ink-muted); }
+  .send { width:32px;height:32px;border-radius:99px;background:var(--primary); color:#fff; display:flex;align-items:center;justify-content:center; font-size:14px; }
+
+  /* Notes */
+  .notes { flex:1; background:var(--bg); padding:16px; }
+  .notes h4 { color:var(--ink); font-size:17px; margin:4px 0 4px; }
+  .notes .sub { color:var(--ink-muted); font-size:11px; margin-bottom:16px; line-height:1.5; }
+  .upload-btn { background:var(--primary); color:#fff; text-align:center; padding:12px; border-radius:14px; font-size:12px; font-weight:600; margin-bottom:20px; }
+  .empty { text-align:center; margin-top:40px; }
+  .empty .emoji { font-size:38px; }
+  .empty .t1 { color:var(--ink); font-weight:600; font-size:12px; margin-top:10px; }
+  .empty .t2 { color:var(--ink-muted); font-size:10.5px; margin-top:4px; padding:0 16px; line-height:1.5; }
+  .note-card { background:#fff; border-radius:14px; padding:12px; display:flex; align-items:center; gap:10px; margin-bottom:10px; border:1px solid rgba(26,26,46,0.05); }
+  .note-card .ic { font-size:20px; }
+  .note-card .title { font-size:11px; font-weight:600; color:var(--ink); }
+  .note-card .status { font-size:9px; color:var(--primary); margin-top:2px; }
+</style>
+</head>
+<body>
+  <h1>LearnGenie — Phase 1 Priority Screens</h1>
+  <p class="note">Static preview built from the app's actual design tokens (colors, spacing, type) — not a live render. Run the Expo project for pixel-accurate screens.</p>
+  <div class="row">
+
+    <div class="col">
+      <div class="label">1. Splash</div>
+      <div class="phone"><div class="splash">
+        <div class="logo">✨</div>
+        <h2>LearnGenie</h2>
+        <p>Study smarter, not harder</p>
+      </div></div>
+    </div>
+
+    <div class="col">
+      <div class="label">2. Onboarding</div>
+      <div class="phone"><div class="onboard">
+        <div class="skip">Skip</div>
+        <div class="art">🤖</div>
+        <h3>Ask your AI tutor anything</h3>
+        <p>Stuck on a topic? Chat with your AI tutor for clear, patient explanations — any time.</p>
+        <div class="dots"><div class="dot"></div><div class="dot active"></div><div class="dot"></div></div>
+        <div style="flex:1"></div>
+        <div class="btn">Next</div>
+      </div></div>
+    </div>
+
+    <div class="col">
+      <div class="label">3. Home Dashboard</div>
+      <div class="phone"><div class="dash">
+        <div class="top">
+          <div><div class="hi">Welcome back,</div><div class="name">Ada 👋</div></div>
+          <div class="streak">🔥 4 day streak</div>
+        </div>
+        <div class="focus-card">
+          <div class="t1">Today's focus</div>
+          <div class="t2">No study plan yet — set one up to get daily topics here.</div>
+          <div class="cta">Create a study plan →</div>
+        </div>
+        <div class="section-title">Quick actions</div>
+        <div class="quick-actions">
+          <div class="qa"><div class="icon">📤</div><span>Upload notes</span></div>
+          <div class="qa"><div class="icon sec">🤖</div><span>Ask AI Tutor</span></div>
+          <div class="qa"><div class="icon warn">🎯</div><span>Practice quiz</span></div>
+        </div>
+        <div class="section-title">This week</div>
+        <div class="stats">
+          <div class="stat"><div class="val" style="color:var(--primary)">0</div><div class="lbl">Quizzes done</div></div>
+          <div class="stat"><div class="val" style="color:var(--secondary)">0h</div><div class="lbl">Hours studied</div></div>
+          <div class="stat"><div class="val" style="color:var(--warning)">—</div><div class="lbl">Avg score</div></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="col">
+      <div class="label">4. AI Tutor Chat</div>
+      <div class="phone"><div class="tutor">
+        <div class="tutor-head"><h4>AI Tutor</h4><div class="cap">7/10 today</div></div>
+        <div class="chat">
+          <div class="bubble ai">Hi! I'm your AI tutor 👋 Ask me to explain a topic, walk through a problem, or quiz you on something you've studied.</div>
+          <div class="bubble me">Can you explain photosynthesis simply?</div>
+          <div class="bubble ai">Sure! Think of a leaf as a tiny solar-powered kitchen — it uses sunlight, water, and CO₂ to cook up sugar for energy...</div>
+        </div>
+        <div class="input-row">
+          <div class="input-fake">Ask about anything you're studying...</div>
+          <div class="send">↑</div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="col">
+      <div class="label">5. Notes Upload</div>
+      <div class="phone"><div class="notes">
+        <h4>Your Notes</h4>
+        <div class="sub">Upload lecture notes, slides, or textbook pages — AI turns them into study material.</div>
+        <div class="upload-btn">📤  Upload a note</div>
+        <div class="note-card">
+          <div class="ic">📕</div>
+          <div><div class="title">Biology_Ch4_Photosynthesis.pdf</div><div class="status">AI is reading this note...</div></div>
+        </div>
+        <div class="empty" style="margin-top:60px">
+          <div class="emoji">📚</div>
+          <div class="t1">No more notes yet</div>
+          <div class="t2">Upload your first PDF, Word doc, slides, or a photo to get started.</div>
+        </div>
+      </div></div>
+    </div>
+
+  </div>
+</body>
+</html>
